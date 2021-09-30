@@ -72,7 +72,7 @@ export class ProductListComponent implements OnInit {
      },
      error => {
       console.log(error);
-    }
+    });
   }
 
 }
