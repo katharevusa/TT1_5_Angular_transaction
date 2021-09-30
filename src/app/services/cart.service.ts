@@ -9,16 +9,18 @@ const baseUrl = 'http://localhost:8080/api/tutorials';
   providedIn: 'root'
 })
 
-export class ProductService {
+export class CartService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<Product[]> {
-      return this.http.get<Product[]>(baseUrl);
+    //need to get from orderItem table all items with the orderId
+    getAll(orderId: number): Observable<Product[]> {
+      return this.http.get<CartItem[]>(baseUrl);
     }
 
-    addToCart(id: number):Observable<any> {
-      return this.http.post(baseUrl, id);
+    //remove from orderItem table the entry with this order_id and product_id
+    remove(orderId: number, productId: number):Observable<any> {
+      return this.http.post(baseUrl, orderId, productId);
     }
 
     /*get(id: any): Observable<Product> {

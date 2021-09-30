@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
+import { CartService } from 'src/app/services/cart.service';
 import { MatCardModule } from '@angular/material/card';
 
 
@@ -45,14 +45,14 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.retrieveProducts();
+    this.retrieveCartProducts();
   }
 
-  retrieveProducts(): void {
-    this.productService.getAll()
+  retrieveCartProducts(): void {
+    this.cartService.getAll()
       .subscribe(
         data => {
-          this.products = data;
+          this.cartItems = data;
           console.log(data);
         },
         error => {
@@ -64,8 +64,8 @@ export class ProductListComponent implements OnInit {
     this.retrieveProducts();
   }
 
-  addProductToCart(id): void {
-     this.productService.addToCart(id)
+  deleteProduct(id): void {
+     this.cartService.remove(id)
      .subscribe(
      response => {
         console.log(response);
@@ -73,6 +73,17 @@ export class ProductListComponent implements OnInit {
      error => {
       console.log(error);
     }
+  }
+
+  checkOut(orderId): void {
+      this.cartService.checkOut(orderId)
+      .subscribe(
+      response => {
+         console.log(response);
+      },
+      error => {
+       console.log(error);
+     }
   }
 
 }
